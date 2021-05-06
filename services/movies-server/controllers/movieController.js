@@ -1,18 +1,18 @@
-const TvSeries = require('../models/tvSeriesModel');
+const Movie = require('../models/movieModel');
 
 class Controller {
     // FINDALL
     static async show(req, res) {
         try {
-            const tvSeries = await TvSeries.find()
-            res.status(200).json(tvSeries)
+            const movies = await Movie.find()
+            res.status(200).json(movies)
         } catch (error) {
             res.status(404).json({ message: error.message })
         }
     }
     // CREATE
     static create(req, res) {
-        const newTvSeries = {
+        const newMovie = {
             title: req.body.title,
             overview: req.body.overview,
             poster_path: req.body.poster_path,
@@ -20,7 +20,7 @@ class Controller {
             tags: []
         }
         try {
-            const result = TvSeries.create(newTvSeries)
+            const result = Movie.create(newMovie)
             res.status(201).json({ message: 'success added' })
         } catch (error) {
             res.status(400).json({ message: error.message })
@@ -28,25 +28,25 @@ class Controller {
     }
     // FIND ONE
     static findOne(req, res) {
-        const tvseries_id = req.params.tvseries_id
+        const movie_id = req.params.movie_id
         try {
-            const foundTvSeries = TvSeries.findOne(tvseries_id)
-            res.status(200).json(foundTvSeries)
+            const foundUser = Movie.findOne(movie_id)
+            res.status(200).json(foundUser)
         } catch (error) {
             res.status(404).json({ message: error.message })
         }
     }
     // EDIT
     static edit(req, res) {
-        const tvseries_id = req.params.tvseries_id
-        const editedTvSeries = {
+        const movie_id = req.params.movie_id
+        const editedMovie = {
             title: req.body.title,
             overview: req.body.overview,
             poster_path: req.body.poster_path,
             popularity: req.body.popularity
         }
         try {
-            const result = TvSeries.edit(tvseries_id, editedTvSeries)
+            const result = Movie.editMovie(movie_id, editedMovie)
             console.log(result);
             res.status(200).json({ message: 'success edited' })
         } catch (error) {
@@ -55,9 +55,9 @@ class Controller {
     }
     // DELETE
     static delete(req, res) {
-        const tvseries_id = req.params.tvseries_id
+        const movie_id = req.params.movie_id
         try {
-            const result = TvSeries.delete(tvseries_id)
+            const result = Movie.delete(movie_id)
             console.log(result);
             res.status(200).json({ message: 'success delete' })
         } catch (error) {

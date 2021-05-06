@@ -1,10 +1,16 @@
 const Controller = require('../controllers/movieController');
-const router = require('express').Router();
+const movieRouter = require('express').Router();
+const { connect } = require('../config/mongoDb');
 
-router.get('/', Controller.show);
-router.post('/', Controller.create);
-router.get('/:movie_id', Controller.findOne);
-router.patch('/:movie_id', Controller.edit);
-router.delete('/:movie_id', Controller.delete);
+movieRouter.get('/', Controller.show);
+movieRouter.post('/', Controller.create);
+movieRouter.get('/:movie_id', Controller.findOne);
+movieRouter.patch('/:movie_id', Controller.edit);
+movieRouter.delete('/:movie_id', Controller.delete);
 
-module.exports = router
+connect()
+    .then(() => {
+        console.log('conencted to Movie DB');
+    })
+
+module.exports = movieRouter
