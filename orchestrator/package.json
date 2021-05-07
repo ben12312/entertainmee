@@ -1,5 +1,5 @@
 {
-  "name": "orchestrator-express",
+  "name": "orchestrator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,7 +13,6 @@
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "ioredis": "^4.27.2",
-    "mongodb": "^3.6.6"
+    "ioredis": "^4.27.2"
   }
 }

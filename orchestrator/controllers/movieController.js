@@ -20,10 +20,10 @@ class Controlller {
                                 movies: movies.data
                             })
                         })
+                        .catch(err => {
+                            res.status(400).json({ message: err.message })
+                        })
                 }
-            })
-            .catch(err => {
-                res.status(400).json({ message: err.message })
             })
     }
     static create(req, res) {
@@ -47,29 +47,16 @@ class Controlller {
     }
     static findOne(req, res) {
         const movieId = req.params.movie_id
-        redis.get("movies")
-            .then(result => {
-                if (result) {
-                    const movies = JSON.parse(result)
-                    movies.forEach(movie => {
-                        if (movie._id == movieId) {
-                            res.status(200).json(movie)
-                        }
-                    })
-                    res.status(404).json({ message: 'Not Found Movie' })
-                } else {
-                    axios({
-                        method: 'GET',
-                        url: baseUrl + `/${movieId}`
-                    })
-                        .then(movie => {
-                            res.status(200).json(movie.data)
-                        })
-                }
+        axios({
+            method: 'GET',
+            url: baseUrl + `/${movieId}`
+        })
+            .then(movie => {
+                res.status(200).json({
+                    movie: movie.data
+                })
             })
             .catch(err => { res.status(404).json({ message: err.message }) })
-
-
     }
     static edit(req, res) {
         const movieId = req.params.movie_id
