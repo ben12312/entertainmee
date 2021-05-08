@@ -1,13 +1,24 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const PORT = process.env.PORT || 4000;
-const router = require('./routes/router');
+const { ApolloServer, gql } = require('apollo-server');
+const MovieSchema = require('./schema/movie');
+const TvSeries = require('./schema/tv-series');
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const typeDefs = gql`
 
-app.use(router);
+    type Query
 
-app.listen(PORT, () => console.log(`running in port ${PORT}`));
+    type Mutation
+
+`;
+
+const resolvers = {
+
+};
+
+const server = new ApolloServer({
+    typeDefs: [typeDefs, MovieSchema.typeDefs, TvSeries.typeDefs],
+    resolvers: [resolvers, MovieSchema.resolvers, TvSeries.resolvers]
+});
+
+server.listen().then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+});

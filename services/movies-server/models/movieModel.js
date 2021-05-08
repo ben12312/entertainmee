@@ -16,7 +16,10 @@ class Movie {
     }
     // Edit movie
     static editMovie(id, editedMovie) {
-        return movieDatabase().collection('movies').updateOne({ _id: ObjectId(id) }, { $set: editedMovie })
+        return movieDatabase().collection('movies').updateOne(
+            { _id: ObjectId(id) },
+            { $set: editedMovie }
+            )
     }
     // Delete movie
     static delete(id) {
