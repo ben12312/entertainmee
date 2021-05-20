@@ -2,13 +2,17 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 import Swal from 'sweetalert2'
-import { deleteMovie } from '../graphql/queries';
+import { deleteMovie, GET_MOVIES } from '../graphql/queries';
 
 export default function MovieCard(props) {
     let movie = props.movie
     let id = props.movie._id
     // eslint-disable-next-line
-    const [deleteMovieById, { loading, error, data }] = useMutation(deleteMovie(id))
+    const [deleteMovieById, { loading, error, data }] = useMutation(deleteMovie(id), {
+        refetchQueries: [{
+            query: GET_MOVIES
+        }]
+    })
 
     if (loading) return <h3 style={{ color: 'wheat' }}>Loading...</h3>
     if (error) console.log(error);

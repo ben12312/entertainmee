@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { editMovie, getMovieById } from '../graphql/queries';
+import { editMovie, getMovieById, GET_MOVIES } from '../graphql/queries';
 // eslint-disable-next-line
 import { BrowserRouter as Router, Switch, Route, useParams, useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
@@ -16,7 +16,11 @@ export default function AddMovie() {
     const [poster_path, setPoster_path] = useState(movie.poster_path);
     const [popularity, setPopularity] = useState(movie.popularity);
 
-    const [editMovieById] = useMutation(editMovie(id, title, overview, poster_path, popularity))
+    const [editMovieById] = useMutation(editMovie(id, title, overview, poster_path, popularity), {
+        refetchQueries: [{
+            query: GET_MOVIES
+        }]
+    })
 
     if (loading) return <h3 style={{ color: 'wheat' }}>Loading...</h3>
     if (error) console.log(error);

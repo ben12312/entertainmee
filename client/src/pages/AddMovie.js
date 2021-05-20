@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { useMutation } from '@apollo/client';
-import { createMovie } from '../graphql/queries';
+import { createMovie, GET_MOVIES } from '../graphql/queries';
 import Swal from 'sweetalert2'
 
 export default function AddMovie() {
@@ -11,7 +11,11 @@ export default function AddMovie() {
     const [popularity, setPopularity] = useState('');
     let history = useHistory();
 
-    const [addMovie, { loading, error }] = useMutation(createMovie(title, overview, poster_path, popularity))
+    const [addMovie, { loading, error }] = useMutation(createMovie(title, overview, poster_path, popularity), {
+        refetchQueries: [{
+            query: GET_MOVIES
+        }]
+    })
 
     if (loading) return <h3 style={{ color: 'wheat' }}>Loading...</h3>
     if (error) console.log(error);
