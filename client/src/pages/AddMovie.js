@@ -14,7 +14,10 @@ export default function AddMovie() {
     const [addMovie, { loading, error }] = useMutation(createMovie(title, overview, poster_path, popularity), {
         refetchQueries: [{
             query: GET_MOVIES
-        }]
+        }],
+        onCompleted() {
+            history.push("/")
+        }
     })
 
     if (loading) return <h3 style={{ color: 'wheat' }}>Loading...</h3>
@@ -31,7 +34,6 @@ export default function AddMovie() {
             })
         }
         addMovie()
-        history.push("/")
     }
 
     return (

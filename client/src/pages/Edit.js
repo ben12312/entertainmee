@@ -19,7 +19,10 @@ export default function AddMovie() {
     const [editMovieById] = useMutation(editMovie(id, title, overview, poster_path, popularity), {
         refetchQueries: [{
             query: GET_MOVIES
-        }]
+        }],
+        onCompleted() {
+            history.push("/")
+        }
     })
 
     if (loading) return <h3 style={{ color: 'wheat' }}>Loading...</h3>
@@ -36,7 +39,6 @@ export default function AddMovie() {
             })
         }
         editMovieById()
-        history.push("/")
     }
 
     return (
