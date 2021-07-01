@@ -13,7 +13,19 @@ import { NavigationContainer } from '@react-navigation/native'
 
 const client = new ApolloClient({
   uri: 'http://192.168.18.14:4000',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          movies: {
+            merge(_, incoming) {
+              return incoming
+            }
+          }
+        }
+      }
+    }
+  })
 });
 
 const Stack = createStackNavigator();

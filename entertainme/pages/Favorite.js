@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, TextInput, ScrollView, StyleSheet, Image } from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
@@ -9,8 +9,18 @@ export default function Favorite() {
     const navigation = useNavigation();
     const favorites = useReactiveVar(favoriteVar)
 
-    if (favorites === []) {
-        return <Text style={{ textAlign: 'center', color: 'wheat', fontSize: 30, marginBottom: 10, marginTop: 70 }}>There is no Favorites Added</Text>
+    if (favorites.length == 0) {
+        return (
+            <>
+                <ScrollView style={styles.container}>
+                    <Text style={{ textAlign: 'center', color: 'wheat', fontSize: 30, marginBottom: 10, marginTop: 70 }}>My Favorites</Text>
+                    <Text style={{ textAlign: 'center', color: 'wheat', fontSize: 25, marginBottom: 10, marginTop: 70 }}>There is no Favorites Added</Text>
+                </ScrollView>
+                <View style={{ backgroundColor: '#282c34' }}>
+                    <Navbar></Navbar>
+                </View>
+            </>
+        )
     }
 
     function deleteFavorite(id) {
